@@ -1,0 +1,97 @@
+* {
+    bg:         rgba(30, 30, 46, 0.93);
+    bg-alt:     rgba(49, 50, 68, 0.65);
+    fg:         #cdd6f4;
+    fg-dim:     #6c7086;
+    accent:     #cba6f7;
+    urgent:     #f38ba8;
+    border-col: rgba(203, 166, 247, 0.2);
+
+    background-color: transparent;
+    text-color:       @fg;
+    font:             "JetBrainsMono Nerd Font 12";
+}
+
+configuration {
+    modi:                "drun";
+    show-icons:          true;
+    icon-theme:          "Papirus-Dark";
+    display-drun:        "";
+    drun-display-format: "{name}";
+}
+
+window {
+    background-color: @bg;
+    border:           1px;
+    border-color:     @border-col;
+    border-radius:    18px;
+    padding:          20px;
+    width:            600px;
+}
+
+mainbox {
+    background-color: transparent;
+    children:         [ inputbar, listview ];
+    spacing:          14px;
+}
+
+inputbar {
+    background-color: @bg-alt;
+    border-radius:    12px;
+    padding:          10px 14px;
+    children:         [ prompt, entry ];
+    spacing:          8px;
+}
+
+prompt {
+    background-color: transparent;
+    text-color:       @accent;
+    font:             "JetBrainsMono Nerd Font Bold 13";
+}
+
+entry {
+    background-color: transparent;
+    text-color:       @fg;
+    placeholder:      "Search apps...";
+    placeholder-color: @fg-dim;
+}
+
+listview {
+    background-color: transparent;
+    lines:            4;
+    columns:          3;
+    spacing:          8px;
+    scrollbar:        false;
+    fixed-height:     true;
+    fixed-columns:    true;
+}
+
+element {
+    background-color: @bg-alt;
+    border-radius:    12px;
+    padding:          14px 10px;
+    spacing:          6px;
+    children:         [ element-icon, element-text ];
+    orientation:      vertical;
+    cursor:           pointer;
+}
+
+element selected {
+    background-color: rgba(203, 166, 247, 0.25);
+    text-color:       @accent;
+    border:           1px;
+    border-color:     @border-col;
+}
+
+element-icon {
+    background-color: transparent;
+    size:             36px;
+    horizontal-align: 0.5;
+}
+
+element-text {
+    background-color: transparent;
+    text-color:       inherit;
+    vertical-align:   0.5;
+    horizontal-align: 0.5;
+}

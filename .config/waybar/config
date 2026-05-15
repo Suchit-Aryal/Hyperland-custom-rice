@@ -1,0 +1,68 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 35,
+    "margin-top": 6,
+    "margin-left": 300,
+    "margin-right": 300,
+    "spacing": 0,
+    "fixed-center": true,
+    "modules-left": [],
+    "modules-center": [
+        "custom/notification",
+        "clock",
+        "hyprland/workspaces",
+        "pulseaudio",
+        "network",
+        "tray",
+        "custom/battery"
+    ],
+    "modules-right": [],
+    "clock": {
+        "format": "{:%I:%M %p}",
+        "tooltip-format": "{:%A, %B %d %Y}"
+    },
+    "hyprland/workspaces": {
+        "format": "{id}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "persistent-workspaces": {
+            "*": 5
+        }
+    },
+    "pulseaudio": {
+        "format": "\udb81\udd7e {volume}%",
+        "format-muted": "\udb81\udd81 muted",
+        "on-click": "python3 ~/.config/hypr/scripts/sound-popup.py &"
+    },
+    "network": {
+        "format-wifi": "\udb82\udd28 {essid}",
+        "format-disconnected": "\udb82\udd2d offline",
+        "format-ethernet": "\udb80\ude00 wired",
+        "on-click": "python3 ~/.config/hypr/scripts/wifi-popup.py &",
+        "tooltip-format": "{ipAddr}"
+    },
+    "bluetooth": {
+        "format": "\udb80\udcaf",
+        "format-connected": "\udb80\udcb1",
+        "format-disabled": "\udb80\udcb2",
+        "on-click": "blueman-manager",
+        "tooltip-format": "{device_alias}"
+    },
+    "tray": {
+        "spacing": 8,
+        "icon-size": 16
+    },
+    "custom/notification": {
+        "format": "\udb80\udc9a",
+        "on-click": "swaync-client -t",
+        "tooltip": false
+    },
+    "custom/battery": {
+        "exec": "~/.config/hypr/scripts/waybar-battery.sh",
+        "return-type": "json",
+        "interval": 2,
+        "on-click": "~/.config/hypr/scripts/power-mode.sh",
+        "tooltip": true
+    }
+}

@@ -1,0 +1,69 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 36,
+    "margin-top": 3,
+    "margin-left": 8,
+    "margin-right": 8,
+    "spacing": 0,
+    "fixed-center": true,
+    "modules-left": [
+        "clock",
+        "tray"
+    ],
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "custom/notification",
+        "custom/battery",
+        "pulseaudio",
+        "custom/power"
+    ],
+    "clock": {
+        "format": " {:%I:%M %p}",
+        "tooltip-format": "{:%A, %B %d %Y}"
+    },
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "persistent-workspaces": { "*": 5 }
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "󰝟 muted",
+        "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
+        "on-click": "$HOME/.config/hypr/scripts/toggle-sound-popup.sh",
+        "tooltip": false
+    },
+    "tray": {
+        "spacing": 8,
+        "icon-size": 16
+    },
+    "custom/notification": {
+        "exec": "swaync-client -swb",
+        "return-type": "json",
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "󰂚",
+            "none": "󰂜",
+            "dnd-notification": "󰂛",
+            "dnd-none": "󰂛"
+        },
+        "on-click": "swaync-client -t",
+        "tooltip": false
+    },
+    "custom/battery": {
+        "exec": "~/.config/hypr/scripts/waybar-battery.sh",
+        "return-type": "json",
+        "interval": 2,
+        "on-click": "~/.config/hypr/scripts/power-mode.sh",
+        "tooltip": true
+    },
+    "custom/power": {
+        "format": "⏻",
+        "on-click": "wlogout",
+        "tooltip": false
+    }
+}

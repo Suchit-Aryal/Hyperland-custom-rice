@@ -1,0 +1,83 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 36,
+    "margin-top": 6,
+    "margin-left": 0,
+    "margin-right": 0,
+    "spacing": 0,
+    "fixed-center": true,
+    "modules-left": [
+        "hyprland/workspaces"
+    ],
+    "modules-center": [
+        "custom/media"
+    ],
+    "modules-right": [
+        "custom/netbt",
+        "bluetooth",
+        "pulseaudio",
+        "custom/battery",
+        "custom/notification"
+    ],
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+        "sort-by-number": true,
+        "separate-outputs": true
+    },
+    "custom/media": {
+        "exec": "~/.config/hypr/scripts/waybar-media.sh",
+        "return-type": "json",
+        "interval": 2,
+        "on-click": "swaync-client -t",
+        "tooltip": false
+    },
+    "custom/netbt": {
+        "exec": "~/.config/hypr/scripts/waybar-net.sh",
+        "return-type": "json",
+        "interval": 5,
+        "on-click": "$HOME/.config/hypr/scripts/toggle-wifi-popup.sh",
+        "tooltip": false
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "\udb81\udf5f muted",
+        "format-icons": {
+            "default": [
+                "\udb81\udd7f",
+                "\udb81\udd80",
+                "\udb81\udd7e"
+            ]
+        },
+        "on-click": "$HOME/.config/hypr/scripts/toggle-sound-popup.sh",
+        "tooltip": false
+    },
+    "custom/notification": {
+        "exec": "swaync-client -swb",
+        "return-type": "json",
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "\udb80\udc9a",
+            "none": "\udb80\udc9c",
+            "dnd-notification": "\udb80\udc9b",
+            "dnd-none": "\udb80\udc9b"
+        },
+        "on-click": "swaync-client -t",
+        "tooltip": false
+    },
+    "bluetooth": {
+        "format": "\udb80\udcaf",
+        "format-disabled": "\udb80\udcb2",
+        "format-connected": "\udb80\udcb1 {device_alias}",
+        "on-click": "blueman-manager",
+        "tooltip": false
+    },
+    "custom/battery": {
+        "exec": "~/.config/hypr/scripts/waybar-battery.sh",
+        "return-type": "json",
+        "interval": 2,
+        "on-click": "~/.config/hypr/scripts/power-mode.sh",
+        "tooltip": true
+    }
+}

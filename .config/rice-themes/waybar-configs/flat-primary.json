@@ -1,0 +1,83 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 32,
+    "margin-top": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+    "spacing": 0,
+    "fixed-center": true,
+    "modules-left": [
+        "clock",
+        "custom/media"
+    ],
+    "modules-center": [
+        "hyprland/workspaces"
+    ],
+    "modules-right": [
+        "pulseaudio",
+        "network",
+        "custom/battery",
+        "custom/notification",
+        "tray"
+    ],
+    "clock": {
+        "format": " {:%I:%M %p}",
+        "tooltip": false
+    },
+    "custom/media": {
+        "exec": "playerctl metadata --format '{{artist}} \u2013 {{title}}' 2>/dev/null || echo ''",
+        "interval": 3,
+        "format": " {}",
+        "max-length": 40,
+        "tooltip": false
+    },
+    "hyprland/workspaces": {
+        "format": "{name}",
+        "on-click": "activate",
+        "sort-by-number": true
+    },
+    "pulseaudio": {
+        "format": "{icon} {volume}%",
+        "format-muted": "\udb81\udf5f muted",
+        "format-icons": {
+            "default": [
+                "\udb81\udd7f",
+                "\udb81\udd80",
+                "\udb81\udd7e"
+            ]
+        },
+        "on-click": "python3 ~/.config/hypr/scripts/sound-popup.py &",
+        "tooltip": false
+    },
+    "network": {
+        "format-wifi": "\udb82\udd28 {essid}",
+        "format-disconnected": "\udb82\udd2d offline",
+        "format-ethernet": "\udb80\ude00 eth",
+        "on-click": "python3 ~/.config/hypr/scripts/wifi-popup.py &",
+        "tooltip": false
+    },
+    "custom/notification": {
+        "exec": "swaync-client -swb",
+        "return-type": "json",
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "\udb80\udc9a",
+            "none": "\udb80\udc9c",
+            "dnd-notification": "\udb80\udc9b",
+            "dnd-none": "\udb80\udc9b"
+        },
+        "on-click": "swaync-client -t",
+        "tooltip": false
+    },
+    "tray": {
+        "spacing": 8
+    },
+    "custom/battery": {
+        "exec": "~/.config/hypr/scripts/waybar-battery.sh",
+        "return-type": "json",
+        "interval": 2,
+        "on-click": "~/.config/hypr/scripts/power-mode.sh",
+        "tooltip": true
+    }
+}

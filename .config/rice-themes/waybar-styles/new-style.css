@@ -1,0 +1,89 @@
+* {
+    font-family: JetBrainsMono Nerd Font;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: #cdd6f4;
+}
+
+.modules-center {
+    background: rgba(30, 30, 46, 0.88);
+    border-radius: 14px;
+    padding: 0 12px;
+    border: 1px solid rgba(203, 166, 247, 0.15);
+}
+
+#clock {
+    padding: 4px 10px;
+    color: #cdd6f4;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    margin-right: 4px;
+}
+
+#workspaces {
+    padding: 0 4px;
+}
+
+#workspaces button {
+    padding: 2px 8px;
+    color: #6c7086;
+    background: transparent;
+    border-radius: 8px;
+    min-width: 20px;
+}
+
+#workspaces button.active {
+    color: #cdd6f4;
+    background: rgba(203, 166, 247, 0.3);
+}
+
+#workspaces button:hover {
+    background: rgba(203, 166, 247, 0.15);
+}
+
+#pulseaudio, #network, #bluetooth, #tray, #custom-notification {
+    padding: 4px 10px;
+    color: #cdd6f4;
+}
+
+#battery {
+    border-left: 1px solid rgba(255,255,255,0.1);
+    padding: 2px 10px;
+    border-radius: 10px;
+    margin: 4px 4px;
+    font-weight: bold;
+    background: rgba(243, 139, 168, 0.4);
+    color: #f38ba8;
+}
+
+#battery.warning {
+    background: rgba(250, 179, 135, 0.4);
+    color: #fab387;
+}
+
+#battery.good {
+    background: rgba(249, 226, 175, 0.4);
+    color: #f9e2af;
+}
+
+#battery.full {
+    background: rgba(166, 227, 161, 0.4);
+    color: #a6e3a1;
+}
+
+#battery.charging {
+    background: rgba(166, 227, 161, 0.4);
+    color: #a6e3a1;
+}
+
+#bluetooth.connected {
+    color: #89b4fa;
+}
+
+#network.disconnected {
+    color: #f38ba8;
+}

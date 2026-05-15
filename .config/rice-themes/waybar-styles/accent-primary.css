@@ -1,0 +1,121 @@
+@import "$HOME/.config/waybar/colors.css";
+
+* {
+    font-family: "JetBrainsMono Nerd Font";
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: @base;
+}
+
+/* WORKSPACES — each button is its own blob */
+#workspaces {
+    padding: 0 6px;
+    background: transparent;
+}
+
+#workspaces button {
+    padding: 2px 12px;
+    margin: 4px 3px;
+    color: @text;
+    background: alpha(@accent, 0.25);
+    border-radius: 8px;
+    font-weight: bold;
+    transition: all 0.2s ease;
+}
+
+#workspaces button.active {
+    background: @accent;
+    color: @base;
+}
+
+#workspaces button:hover {
+    background: alpha(@accent, 0.5);
+}
+
+/* CENTER — media blob */
+#custom-media {
+    padding: 2px 16px;
+    margin: 4px 0;
+    background: alpha(@accent, 0.25);
+    border-radius: 8px;
+    color: @text;
+}
+
+#custom-media.hidden {
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+    background: transparent;
+}
+
+/* RIGHT blobs */
+#custom-netbt,
+#custom-visualizer,
+#battery {
+    padding: 2px 14px;
+    margin: 4px 3px;
+    border-radius: 8px;
+    background: alpha(@accent, 0.25);
+    color: @text;
+    font-weight: bold;
+}
+
+#custom-visualizer {
+    color: @accent;
+    letter-spacing: 1px;
+}
+
+#battery.critical { color: @red; }
+#battery.warning  { color: @orange; }
+#battery.good     { color: @yellow; }
+#battery.full, #battery.charging { color: @green; }
+
+#pulseaudio {
+    padding: 2px 14px;
+    margin: 4px 3px;
+    border-radius: 8px;
+    background: alpha(@accent, 0.25);
+    color: @text;
+    font-weight: bold;
+}
+
+#pulseaudio.muted {
+    color: @overlay;
+}
+
+#custom-notification {
+    padding: 2px 14px;
+    margin: 4px 3px;
+    border-radius: 8px;
+    background: alpha(@accent, 0.25);
+    color: @text;
+    font-weight: bold;
+}
+
+#custom-notification {
+    padding: 2px 14px;
+    margin: 4px 3px;
+    border-radius: 8px;
+    background: alpha(@accent, 0.25);
+    color: @text;
+    font-weight: bold;
+}
+
+#bluetooth {
+    padding: 2px 14px;
+    margin: 4px 3px;
+    border-radius: 8px;
+    background: alpha(@accent, 0.25);
+    color: @text;
+    font-weight: bold;
+}
+
+#bluetooth.connected {
+    color: @accent2;
+}

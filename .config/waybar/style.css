@@ -1,0 +1,102 @@
+@import "$HOME/.config/waybar/colors.css";
+
+* {
+    font-family: JetBrainsMono Nerd Font;
+    font-size: 13px;
+    border: none;
+    border-radius: 0;
+}
+window#waybar {
+    background: transparent;
+    color: @text;
+}
+.modules-center {
+    background: rgba(30, 30, 46, 0.88);
+    border-radius: 14px;
+    padding: 0 12px;
+    border: 1px solid alpha(@accent, 0.15);
+}
+#clock {
+    padding: 4px 10px;
+    color: @text;
+    border-right: 1px solid rgba(255,255,255,0.1);
+    margin-right: 4px;
+}
+#workspaces {
+    padding: 0 4px;
+}
+#workspaces button {
+    padding: 2px 8px;
+    color: @overlay;
+    background: transparent;
+    border-radius: 8px;
+    min-width: 20px;
+}
+#workspaces button.active {
+    color: @text;
+    background: alpha(@accent, 0.3);
+}
+#workspaces button:hover {
+    background: alpha(@accent, 0.15);
+}
+#pulseaudio, #network, #bluetooth, #tray, #custom-notification {
+    padding: 4px 10px;
+    color: @text;
+}
+
+
+
+
+
+
+
+
+#bluetooth.connected {
+    color: @accent2;
+}
+#network.disconnected {
+    color: @red;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Charging — animated fill bottom to top */
+@keyframes charge-fill {
+    0%   { background: linear-gradient(to top, rgba(166,227,161,0.8) 0%,   rgba(30,30,46,0.4) 0%); }
+    25%  { background: linear-gradient(to top, rgba(166,227,161,0.8) 25%,  rgba(30,30,46,0.4) 25%); }
+    50%  { background: linear-gradient(to top, rgba(166,227,161,0.8) 50%,  rgba(30,30,46,0.4) 50%); }
+    75%  { background: linear-gradient(to top, rgba(166,227,161,0.8) 75%,  rgba(30,30,46,0.4) 75%); }
+    100% { background: linear-gradient(to top, rgba(166,227,161,0.8) 100%, rgba(30,30,46,0.4) 100%); }
+}
+
+#custom-battery {
+    border-left: 1px solid rgba(255,255,255,0.1);
+    padding: 2px 10px;
+    border-radius: 10px;
+    margin: 4px 4px;
+    font-weight: bold;
+    background: rgba(243,139,168,0.4);
+    color: #f38ba8;
+}
+#custom-battery.warning  { background: rgba(250,179,135,0.4); color: #fab387; }
+#custom-battery.good     { background: rgba(249,226,175,0.4); color: #f9e2af; }
+#custom-battery.full     { background: rgba(166,227,161,0.4); color: #a6e3a1; }
+#custom-battery.c0 { background: rgba(243,139,168,0.5); color: #f38ba8; }
+#custom-battery.c1 { background: rgba(250,179,135,0.5); color: #fab387; }
+#custom-battery.c2 { background: rgba(249,226,175,0.5); color: #f9e2af; }
+#custom-battery.c3 { background: rgba(166,227,161,0.5); color: #a6e3a1; }
+#custom-battery.c4 { background: rgba(137,180,250,0.5); color: #89b4fa; }
+#custom-battery.c5 { background: rgba(203,166,247,0.5); color: #cba6f7; }
