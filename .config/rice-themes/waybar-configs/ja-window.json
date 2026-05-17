@@ -44,7 +44,7 @@
         "format": "{icon} {volume}%",
         "format-muted": "󰝟 muted",
         "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
-        "on-click": "$HOME/.config/hypr/scripts/toggle-sound-popup.sh",
+        "on-click": "/home/upicy/.config/hypr/scripts/toggle-sound-popup.sh",
         "tooltip": false
     },
     "tray": {

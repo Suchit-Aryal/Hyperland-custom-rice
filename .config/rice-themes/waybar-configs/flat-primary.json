@@ -47,14 +47,15 @@
                 "\udb81\udd7e"
             ]
         },
-        "on-click": "python3 ~/.config/hypr/scripts/sound-popup.py &",
+        "on-click": "/usr/bin/python3 ~/.config/hypr/scripts/sound-popup.py &",
         "tooltip": false
     },
     "network": {
+        "interface": "wlp8s0",
         "format-wifi": "\udb82\udd28 {essid}",
         "format-disconnected": "\udb82\udd2d offline",
         "format-ethernet": "\udb80\ude00 eth",
-        "on-click": "python3 ~/.config/hypr/scripts/wifi-popup.py &",
+        "on-click": "bash ~/.config/rofi/launchers/wifi.sh",
         "tooltip": false
     },
     "custom/notification": {

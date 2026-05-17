@@ -1,0 +1,13 @@
+#!/bin/bash
+bluetoothctl power on
+DEVICES=$(bluetoothctl devices | awk '{$1=""; $2=""; print $0}' | sed 's/^ *//')
+SELECTED=$(echo "$DEVICES" | rofi -dmenu -p "Bluetooth" -theme ~/.config/rofi/launcher.rasi)
+[ -z "$SELECTED" ] && exit 0
+MAC=$(bluetoothctl devices | grep "$SELECTED" | awk '{print $2}')
+if bluetoothctl info "$MAC" | grep -q "Connected: yes"; then
+    bluetoothctl disconnect "$MAC"
+    notify-send "Bluetooth" "Disconnected from $SELECTED"
+else
+    bluetoothctl connect "$MAC"
+    notify-send "Bluetooth" "Connected to $SELECTED"
+fi

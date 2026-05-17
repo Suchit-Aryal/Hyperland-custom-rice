@@ -152,7 +152,7 @@ configuration {
     display-filebrowser:        "";
     display-window:             "";
 	drun-display-format:        "{name}";
-	window-format:              "{w} · {c} · {t}";
+	window-format:              "{w}: {c}";
 }
 
 /*****----- Global Properties -----*****/
@@ -167,7 +167,7 @@ window {
     location:                    center;
     anchor:                      center;
     fullscreen:                  false;
-    width:                       600px;
+    width:                       700px;
     x-offset:                    0px;
     y-offset:                    0px;
 
@@ -255,8 +255,8 @@ button selected {
 /*****----- Listview -----*****/
 listview {
     enabled:                     true;
-    columns:                     1;
-    lines:                       7;
+    columns:                     3;
+    lines:                       1;
     cycle:                       true;
     dynamic:                     true;
     scrollbar:                   false;
@@ -274,12 +274,13 @@ listview {
 /*****----- Elements -----*****/
 element {
     enabled:                     true;
-    spacing:                     10px;
-    padding:                     4px;
-    border-radius:               100%;
+    spacing:                     15px;
+    padding:                     35px 10px;
+    border-radius:               20px;
     background-color:            transparent;
     text-color:                  @foreground;
     cursor:                      pointer;
+    orientation:                 vertical;
 }
 element normal.normal {
     background-color:            inherit;
@@ -308,7 +309,7 @@ element selected.active {
 element-icon {
     background-color:            transparent;
     text-color:                  inherit;
-    size:                        32px;
+    size:                        96px;
     cursor:                      inherit;
 }
 element-text {
@@ -316,7 +317,7 @@ element-text {
     text-color:                  inherit;
     cursor:                      inherit;
     vertical-align:              0.5;
-    horizontal-align:            0.0;
+    horizontal-align:            0.5;
 }
 
 /*****----- Message -----*****/
@@ -333,7 +334,7 @@ textbox {
 }
 error-message {
     padding:                     12px;
-    border-radius:               20px;
+    border-radius:               0px;
     background-color:            @background;
     text-color:                  @foreground;
 }

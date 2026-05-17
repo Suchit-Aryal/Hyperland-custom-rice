@@ -37,7 +37,7 @@
         "exec": "~/.config/hypr/scripts/waybar-net.sh",
         "return-type": "json",
         "interval": 5,
-        "on-click": "$HOME/.config/hypr/scripts/toggle-wifi-popup.sh",
+        "on-click": "/home/upicy/.config/hypr/scripts/toggle-wifi-popup.sh",
         "tooltip": false
     },
     "pulseaudio": {
@@ -50,7 +50,7 @@
                 "\udb81\udd7e"
             ]
         },
-        "on-click": "$HOME/.config/hypr/scripts/toggle-sound-popup.sh",
+        "on-click": "/home/upicy/.config/hypr/scripts/toggle-sound-popup.sh",
         "tooltip": false
     },
     "custom/notification": {

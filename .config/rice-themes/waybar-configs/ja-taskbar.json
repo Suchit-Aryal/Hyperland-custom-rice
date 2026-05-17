@@ -32,17 +32,18 @@
         "persistent-workspaces": { "*": 5 }
     },
     "network": {
+        "interface": "wlp8s0",
         "format-wifi": "󰤨 {essid}",
         "format-disconnected": "󰤭 offline",
         "format-ethernet": "󰈀 eth",
-        "on-click": "$HOME/.config/hypr/scripts/toggle-wifi-popup.sh",
+        "on-click": "/home/upicy/.config/hypr/scripts/toggle-wifi-popup.sh",
         "tooltip": false
     },
     "pulseaudio": {
         "format": "{icon} {volume}%",
         "format-muted": "󰝟 muted",
         "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
-        "on-click": "$HOME/.config/hypr/scripts/toggle-sound-popup.sh",
+        "on-click": "/home/upicy/.config/hypr/scripts/toggle-sound-popup.sh",
         "tooltip": false
     },
     "tray": {
