@@ -103,7 +103,7 @@ class SoundPopup(Gtk.ApplicationWindow):
         css.load_from_data(CSS)
         Gtk.StyleContext.add_provider_for_display(Gdk.Display.get_default(), css, Gtk.STYLE_PROVIDER_PRIORITY_APPLICATION)
 
-        
+        # No focus-leave auto-close: popup stays until Esc or toggled from waybar
         key = Gtk.EventControllerKey()
         key.connect('key-pressed', lambda c, k, *a: self.close() if k == Gdk.KEY_Escape else False)
         self.add_controller(key)

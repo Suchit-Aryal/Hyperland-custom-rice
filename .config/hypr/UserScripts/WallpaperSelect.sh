@@ -83,7 +83,7 @@ menu() {
       cache_gif_image="$HOME/.cache/gif_preview/${pic_name}.png"
       if [[ ! -f "$cache_gif_image" ]]; then
         mkdir -p "$HOME/.cache/gif_preview"
-        magick "$pic_path[0]" -resize 1920x1080 "$cache_gif_image"
+        magick "${pic_path}[0]" -resize 1920x1080 "$cache_gif_image"
       fi
       printf "%s\x00icon\x1f%s\n" "$pic_name" "$cache_gif_image"
     elif [[ "$pic_name" =~ \.(mp4|mkv|mov|webm|MP4|MKV|MOV|WEBM)$ ]]; then
@@ -102,7 +102,7 @@ menu() {
 
 modify_startup_config() {
   local selected_file="$1"
-  local startup_config="$HOME/.config/hypr/UserConfigs/Startup_Apps.conf"
+  local startup_config="$HOME/.config/hypr/configs/Startup_Apps.conf"
 
   # Check if it's a live wallpaper (video)
   if [[ "$selected_file" =~ \.(mp4|mkv|mov|webm)$ ]]; then
@@ -125,16 +125,34 @@ modify_startup_config() {
   fi
 }
 
+# Ensure swww-daemon is running AND actually able to serve requests.
+# The daemon binds its wayland socket asynchronously. If we `swww img` before
+# it is ready the command silently fails and the wallpaper never applies.
+# We also start it detached (setsid) so it survives when this script exits —
+# a plain `swww-daemon ... &` is killed as soon as the invoking shell exits.
+ensure_swww() {
+  if ! pgrep -x "swww-daemon" >/dev/null; then
+    setsid -f swww-daemon --format xrgb </dev/null >/dev/null 2>&1
+  fi
+  local tries=0
+  while ! swww query >/dev/null 2>&1 && [ "$tries" -lt 20 ]; do
+    sleep 0.5
+    tries=$((tries + 1))
+    pgrep -x "swww-daemon" >/dev/null || setsid -f swww-daemon --format xrgb </dev/null >/dev/null 2>&1
+  done
+  [ "$tries" -lt 20 ]
+}
+
 # Apply Image Wallpaper
 apply_image_wallpaper() {
   local image_path="$1"
 
   kill_wallpaper_for_image
 
-  if ! pgrep -x "swww-daemon" >/dev/null; then
-    echo "Starting swww-daemon..."
-    swww-daemon --format xrgb &
-  fi
+  ensure_swww || {
+    notify-send -i "$iDIR/error.png" "E-R-R-O-R" "swww-daemon failed to start"
+    return 1
+  }
 
   swww img -o "$focused_monitor" "$image_path" $SWWW_PARAMS
 

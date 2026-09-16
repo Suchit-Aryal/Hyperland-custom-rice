@@ -1,0 +1,21 @@
+#!/bin/sh
+# Hyprland session start wrapper for LightDM.
+# Fixes the classic LightDM Wayland race: LightDM launches the session
+# before its assigned VT is active, so autamarine's logind session times
+# out and Hyprland crashes ("Session could not be activated in time").
+# We simply wait for the VT to actually become active before starting.
+
+if [ -n "$XDG_VTNR" ]; then
+    probe=/sys/devices/virtual/tty/tty0/active
+    i=0
+    while [ $i -lt 400 ]; do
+        current=$(cat "$probe" 2>/dev/null)
+        if [ "$current" = "tty$XDG_VTNR" ]; then
+            break
+        fi
+        i=$((i + 1))
+        sleep 0.05
+    done
+fi
+
+exec /usr/bin/start-hyprland "$@"

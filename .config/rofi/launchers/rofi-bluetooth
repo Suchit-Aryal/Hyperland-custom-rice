@@ -1,13 +1,89 @@
 #!/bin/bash
-bluetoothctl power on
-DEVICES=$(bluetoothctl devices | awk '{$1=""; $2=""; print $0}' | sed 's/^ *//')
-SELECTED=$(echo "$DEVICES" | rofi -dmenu -p "Bluetooth" -theme ~/.config/rofi/launcher.rasi)
-[ -z "$SELECTED" ] && exit 0
-MAC=$(bluetoothctl devices | grep "$SELECTED" | awk '{print $2}')
-if bluetoothctl info "$MAC" | grep -q "Connected: yes"; then
-    bluetoothctl disconnect "$MAC"
-    notify-send "Bluetooth" "Disconnected from $SELECTED"
-else
-    bluetoothctl connect "$MAC"
-    notify-send "Bluetooth" "Connected to $SELECTED"
-fi
+# Rofi bluetooth menu: saved devices, scan for new devices, launch bluetooth manager
+# Based on the classic nickclyde/rofi-bluetooth pattern, adapted for this rice.
+
+THEME=~/.config/rofi/launcher.rasi
+THEME_STR='window {width: 480px;} listview {lines: 10;}'
+
+start_scan() {
+    bluetoothctl power on >/dev/null 2>&1
+    bluetoothctl scan on >/dev/null 2>&1 &
+    SCAN_PID=$!
+}
+
+stop_scan() {
+    [ -n "$SCAN_PID" ] && kill "$SCAN_PID" 2>/dev/null
+    bluetoothctl scan off >/dev/null 2>&1
+}
+trap stop_scan EXIT
+
+bluetoothctl power on >/dev/null 2>&1
+
+while true; do
+    STATUS=$(bluetoothctl show | grep "Powered" | awk '{print $2}')
+
+    # Saved = paired devices (with connection status)
+    SAVED=""
+    for MAC in $(bluetoothctl devices Paired | awk '{print $2}'); do
+        NAME=$(bluetoothctl devices Paired | grep "$MAC" | cut -d' ' -f3-)
+        if bluetoothctl info "$MAC" | grep -q "Connected: yes"; then
+            SAVED+="󰂱  $NAME  ● Connected\n"
+        else
+            SAVED+="󰂯  $NAME\n"
+        fi
+    done
+
+    # Found = devices discovered during scan that are not paired
+    FOUND=""
+    if [ -n "$SCAN_PID" ] && kill -0 "$SCAN_PID" 2>/dev/null; then
+        while IFS=' ' read -r _ MAC NAME; do
+            [ -z "$MAC" ] && continue
+            bluetoothctl devices Paired | grep -q "$MAC" && continue
+            FOUND+="󰂰  $NAME\n"
+        done < <(bluetoothctl devices 2>/dev/null)
+    fi
+
+    OPTIONS="󰂲  Power ${STATUS}\n󰤁  Scan / Refresh\n󰂺  Bluetooth Manager\n"
+    [ -n "$SAVED" ] && OPTIONS+="── Saved Devices ──\n${SAVED}"
+    [ -n "$FOUND" ] && OPTIONS+="── Found Devices (scanning…) ──\n${FOUND}"
+
+    CHOSEN=$(echo -e "$OPTIONS" | rofi -dmenu -p " Bluetooth" -theme "$THEME" -theme-str "$THEME_STR")
+    [ -z "$CHOSEN" ] && exit 0
+
+    case "$CHOSEN" in
+        *"Power"*)
+            bluetoothctl power off >/dev/null 2>&1
+            [ "$STATUS" = "off" ] && bluetoothctl power on >/dev/null 2>&1
+            ;;
+        *"Scan"*|*"Refresh"*)
+            stop_scan
+            start_scan
+            notify-send "Bluetooth" "Scanning for devices…" -i bluetooth -t 2000
+            ;;
+        *"Bluetooth Manager"*|*"Settings"*)
+            stop_scan
+            blueman-manager >/dev/null 2>&1 &
+            exit 0
+            ;;
+        *"── "*)
+            # section header clicked — just reopen
+            ;;
+        *"● Connected"*)
+            NAME=$(echo "$CHOSEN" | sed 's/● Connected//; s/^ *//; s/ *$//')
+            MAC=$(bluetoothctl devices Paired | grep -F "$NAME" | awk '{print $2}' | head -1)
+            bluetoothctl disconnect "$MAC" >/dev/null 2>&1
+            notify-send "Bluetooth" "Disconnected from $NAME" -i bluetooth
+            ;;
+        "󰂯 "*|"󰂰 "*)
+            NAME="${CHOSEN#*  }"
+            MAC=$(bluetoothctl devices | grep -F "$NAME" | awk '{print $2}' | head -1)
+            [ -z "$MAC" ] && continue
+            notify-send "Bluetooth" "Connecting to $NAME…" -i bluetooth -t 2000
+            if bluetoothctl connect "$MAC" >/dev/null 2>&1; then
+                notify-send "Bluetooth" "Connected to $NAME ✓" -i bluetooth
+            else
+                notify-send -u critical "Bluetooth" "Failed to connect to $NAME" -i bluetooth
+            fi
+            ;;
+    esac
+done

@@ -1,0 +1,5 @@
+#!/nix/store/7a60q5dgnv6z96c279rc1nalyiw4mgqn-bash-interactive-5.3p15/bin/sh
+
+cat ~/.local/state/caelestia/sequences.txt 2>/dev/null
+
+exec "$@"

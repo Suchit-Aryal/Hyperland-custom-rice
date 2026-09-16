@@ -111,8 +111,20 @@ wallust run -s "$wallpaper_path" || true
 wallust_targets=(
   "$HOME/.config/waybar/wallust/colors-waybar.css"
   "$HOME/.config/rofi/wallust/colors-rofi.rasi"
+  "$HOME/.config/kitty/kitty-themes/01-Wallust.conf"
 )
 wait_for_templates "$start_ts" "${wallust_targets[@]}" || true
+
+# A wallpaper change resets any scheme picked via Ctrl+Super+B, so the terminal
+# follows the wallpaper again (still guarded for readability below).
+KITTY_THEMES="$HOME/.config/kitty/kitty-themes"
+if [ -f "$KITTY_THEMES/02-Scheme.conf" ]; then
+  rm -f "$KITTY_THEMES/02-Scheme.conf"
+fi
+sed -i '/^include .\/02-Scheme.conf$/d' "$KITTY_THEMES/00-Default.conf" 2>/dev/null || true
+
+# Ensure kitty text stays readable regardless of the wallpaper-derived palette
+"$HOME/.config/hypr/scripts/kitty-readable.sh" || true
 
 # Normalize Ghostty palette syntax in case ':' was used by older files
 if [ -f "$HOME/.config/ghostty/wallust.conf" ]; then

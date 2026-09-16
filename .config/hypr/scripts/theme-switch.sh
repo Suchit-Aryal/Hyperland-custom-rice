@@ -1,5 +1,6 @@
 #!/bin/bash
 THEMES_DIR="$HOME/.config/rice-themes"
+WALLPAPERS_DIR="$HOME/Pictures/wallpapers"
 THEME="$1"
 THEME_PATH="$THEMES_DIR/themes/$THEME"
 
@@ -11,7 +12,7 @@ WALLPAPER_NAME=$(cat "$THEME_PATH/wallpaper" 2>/dev/null)
 COLORS=$(cat "$THEME_PATH/colors" 2>/dev/null)
 POPUP_POS=$(cat "$THEME_PATH/popup-pos" 2>/dev/null)
 ROFI_STYLE=$(cat "$THEME_PATH/rofi" 2>/dev/null)
-WALLPAPER=$(find "$THEMES_DIR/wallpapers" -name "${WALLPAPER_NAME}*" | head -1)
+WALLPAPER=$(find -L "$WALLPAPERS_DIR" -name "${WALLPAPER_NAME}*" | head -1)
 
 # Apply waybar style
 [[ -n "$WAYBAR_STYLE" && -f "$THEMES_DIR/waybar-styles/$WAYBAR_STYLE.css" ]] && \
